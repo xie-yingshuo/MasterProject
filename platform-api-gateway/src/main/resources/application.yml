@@ -1,0 +1,58 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: platform-api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 部署引擎路由
+        - id: deployment-engine
+          uri: lb://platform-deployment-engine
+          predicates:
+            - Path=/api/v1/deployment/**
+          filters:
+            - StripPrefix=1
+        # 资源管理路由
+        - id: resource-manager
+          uri: lb://platform-resource-manager
+          predicates:
+            - Path=/api/v1/resource/**
+          filters:
+            - StripPrefix=1
+        # 监控服务路由
+        - id: monitor
+          uri: lb://platform-monitor
+          predicates:
+            - Path=/api/v1/monitor/**
+          filters:
+            - StripPrefix=1
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+
+# Eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always 
