@@ -192,6 +192,6 @@ DELETE /api/v1/deployment/{deploymentId}
 
 ## 联系方式
 
-- 项目维护者：谢英硕
+- 项目维护者：谢迎朔
 - 邮箱：[your-email@example.com]
 - 项目链接：[https://github.com/xie-yingshuo/MasterProject](https://github.com/xie-yingshuo/MasterProject) 
