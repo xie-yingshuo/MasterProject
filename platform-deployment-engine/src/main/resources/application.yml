@@ -14,8 +14,14 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+    # 启用服务发现
+    fetch-registry: true
+    # 注册到Eureka
+    register-with-eureka: true
   instance:
     prefer-ip-address: true
+    # 实例ID配置
+    instance-id: ${spring.application.name}:${server.port}
 
 # 管理端点配置
 management:

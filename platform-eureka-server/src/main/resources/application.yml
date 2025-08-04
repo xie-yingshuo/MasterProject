@@ -1,0 +1,44 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: platform-eureka-server
+
+# Eureka Server配置
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    # 作为Eureka Server，不需要注册自己
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  server:
+    # 关闭自我保护模式，便于开发测试
+    enable-self-preservation: false
+    # 清理无效节点的时间间隔
+    eviction-interval-timer-in-ms: 1000
+    # 响应缓存更新时间间隔
+    response-cache-update-interval-ms: 1000
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.netflix.eureka: DEBUG
+    com.netflix.discovery: DEBUG 
