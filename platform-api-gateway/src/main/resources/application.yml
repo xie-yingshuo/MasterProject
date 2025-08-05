@@ -11,49 +11,42 @@ spring:
           enabled: true
           lower-case-service-id: true
       routes:
-        # 部署引擎路由
         - id: deployment-engine
           uri: lb://platform-deployment-engine
           predicates:
-            - Path=/api/v1/deployment/**
+            - Path=/api/deployment/**
           filters:
             - StripPrefix=1
-        # 资源管理路由
         - id: resource-manager
           uri: lb://platform-resource-manager
           predicates:
-            - Path=/api/v1/resource/**
+            - Path=/api/resource/**
           filters:
             - StripPrefix=1
-        # 监控服务路由
         - id: monitor
           uri: lb://platform-monitor
           predicates:
-            - Path=/api/v1/monitor/**
+            - Path=/api/monitor/**
           filters:
             - StripPrefix=1
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowed-origins: "*"
-            allowed-methods: "*"
-            allowed-headers: "*"
+        - id: decision-engine
+          uri: lb://platform-decision-engine
+          predicates:
+            - Path=/api/decision/**
+          filters:
+            - StripPrefix=1
+        - id: demo-client
+          uri: lb://platform-demo-client
+          predicates:
+            - Path=/api/demo/**
+          filters:
+            - StripPrefix=1
 
-# Eureka配置
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    # 启用服务发现
-    fetch-registry: true
-    # 注册到Eureka
-    register-with-eureka: true
-  instance:
-    prefer-ip-address: true
-    # 实例ID配置
-    instance-id: ${spring.application.name}:${server.port}
 
-# 管理端点配置
 management:
   endpoints:
     web:

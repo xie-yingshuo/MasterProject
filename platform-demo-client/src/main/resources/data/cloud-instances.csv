@@ -1,0 +1,20 @@
+Instance Name,Region,Operating System,Instance Type,vCPU,On-Demand Hourly Rate,Memory,Temporary Storage
+B2pts v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.0095,1 GiB,0 GiB
+B2pls v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.038,4 GiB,0 GiB
+B2ps v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.0759,8 GiB,0 GiB
+B4pls v2,Central US,CentOS or Ubuntu Linux,General purpose,4,0.134,8 GiB,0 GiB
+B4ps v2,Central US,CentOS or Ubuntu Linux,General purpose,4,0.152,16 GiB,0 GiB
+B8pls v2,Central US,CentOS or Ubuntu Linux,General purpose,8,0.269,16 GiB,0 GiB
+B8ps v2,Central US,CentOS or Ubuntu Linux,General purpose,8,0.304,32 GiB,0 GiB
+B16pls v2,Central US,CentOS or Ubuntu Linux,General purpose,16,0.538,32 GiB,0 GiB
+B16ps v2,Central US,CentOS or Ubuntu Linux,General purpose,16,0.607,64 GiB,0 GiB
+B2ts v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.0118,1 GiB,0 GiB
+B2ls v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.047,4 GiB,0 GiB
+B2s v2,Central US,CentOS or Ubuntu Linux,General purpose,2,0.094,8 GiB,0 GiB
+B4ls v2,Central US,CentOS or Ubuntu Linux,General purpose,4,0.167,8 GiB,0 GiB
+B4s v2,Central US,CentOS or Ubuntu Linux,General purpose,4,0.188,16 GiB,0 GiB
+B8ls v2,Central US,CentOS or Ubuntu Linux,General purpose,8,0.333,16 GiB,0 GiB
+B8s v2,Central US,CentOS or Ubuntu Linux,General purpose,8,0.376,32 GiB,0 GiB
+B16ls v2,Central US,CentOS or Ubuntu Linux,General purpose,16,0.666,32 GiB,0 GiB
+B16s v2,Central US,CentOS or Ubuntu Linux,General purpose,16,0.752,64 GiB,0 GiB
+B32ls v2,Central US,CentOS or Ubuntu Linux,General purpose,32,1.332,64 GiB,0 GiB 

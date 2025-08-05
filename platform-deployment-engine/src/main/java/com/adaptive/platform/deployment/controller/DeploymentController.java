@@ -1,13 +1,14 @@
 package com.adaptive.platform.deployment.controller;
 
-import com.adaptive.platform.common.model.ApiResponse;
+import com.adaptive.platform.common.response.Result;
 import com.adaptive.platform.deployment.model.DeploymentRequest;
+import com.adaptive.platform.deployment.model.DeploymentResponse;
 import com.adaptive.platform.deployment.service.DeploymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 /**
  * 部署控制器
@@ -21,40 +22,30 @@ public class DeploymentController {
     private final DeploymentService deploymentService;
     
     /**
-     * 创建部署
+     * 创建部署任务
      */
-    @PostMapping
-    public ApiResponse<String> createDeployment(@Valid @RequestBody DeploymentRequest request) {
-        log.info("Received deployment request: {}", request.getServiceName());
-        String deploymentId = deploymentService.createDeployment(request);
-        return ApiResponse.success(deploymentId);
+    @PostMapping("/create")
+    public Result<DeploymentResponse> createDeployment(@Valid @RequestBody DeploymentRequest request) {
+        log.info("收到部署请求: {}", request);
+        DeploymentResponse response = deploymentService.createDeployment(request);
+        return Result.success(response);
     }
     
     /**
      * 获取部署状态
      */
-    @GetMapping("/{deploymentId}")
-    public ApiResponse<Object> getDeploymentStatus(@PathVariable String deploymentId) {
-        log.info("Getting deployment status for: {}", deploymentId);
-        Object status = deploymentService.getDeploymentStatus(deploymentId);
-        return ApiResponse.success(status);
+    @GetMapping("/{deploymentId}/status")
+    public Result<DeploymentResponse> getDeploymentStatus(@PathVariable String deploymentId) {
+        DeploymentResponse response = deploymentService.getDeploymentStatus(deploymentId);
+        return Result.success(response);
     }
     
     /**
      * 取消部署
      */
-    @DeleteMapping("/{deploymentId}")
-    public ApiResponse<Void> cancelDeployment(@PathVariable String deploymentId) {
-        log.info("Cancelling deployment: {}", deploymentId);
+    @PostMapping("/{deploymentId}/cancel")
+    public Result<Void> cancelDeployment(@PathVariable String deploymentId) {
         deploymentService.cancelDeployment(deploymentId);
-        return ApiResponse.success();
-    }
-    
-    /**
-     * 健康检查
-     */
-    @GetMapping("/health")
-    public ApiResponse<String> health() {
-        return ApiResponse.success("Deployment Engine is running");
+        return Result.success();
     }
 } 

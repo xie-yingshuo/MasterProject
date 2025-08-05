@@ -5,96 +5,68 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import java.util.Map;
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 /**
  * 部署请求模型
  */
 @Data
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "deployment_request")
 public class DeploymentRequest {
     
-    /**
-     * 服务名称
-     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @NotBlank(message = "服务名称不能为空")
     private String serviceName;
     
-    /**
-     * 服务版本
-     */
-    private String version;
+    @NotBlank(message = "服务版本不能为空")
+    private String serviceVersion;
     
-    /**
-     * 镜像地址
-     */
-    private String imageUrl;
+    @NotNull(message = "CPU需求不能为空")
+    @Min(value = 1, message = "CPU需求至少为1")
+    private Integer cpuRequirement;
     
-    /**
-     * 端口映射
-     */
-    private List<PortMapping> portMappings;
+    @NotNull(message = "内存需求不能为空")
+    @Min(value = 1, message = "内存需求至少为1GB")
+    private Integer memoryRequirement;
     
-    /**
-     * 环境变量
-     */
-    private Map<String, String> environment;
+    @NotNull(message = "实例数量不能为空")
+    @Min(value = 1, message = "实例数量至少为1")
+    private Integer instanceCount;
     
-    /**
-     * 资源配置
-     */
-    private ResourceConfig resourceConfig;
+    private String preferredRegion;
+    private String preferredCloudProvider;
+    private Double maxBudgetPerHour;
+    private String deploymentStrategy;
     
-    /**
-     * 部署策略
-     */
-    private DeploymentStrategy strategy;
+    @Enumerated(EnumType.STRING)
+    private DeploymentStatus status;
     
-    /**
-     * 目标云平台
-     */
-    private String targetCloud;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     
-    /**
-     * 端口映射
-     */
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PortMapping {
-        private Integer containerPort;
-        private Integer hostPort;
-        private String protocol;
+    public enum DeploymentStatus {
+        PENDING, PROCESSING, SUCCESS, FAILED, CANCELLED
     }
     
-    /**
-     * 资源配置
-     */
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ResourceConfig {
-        private Double cpu;
-        private String memory;
-        private String storage;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
     
-    /**
-     * 部署策略
-     */
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class DeploymentStrategy {
-        private String type; // BLUE_GREEN, CANARY, ROLLING
-        private Integer replicas;
-        private Boolean autoScaling;
-        private Integer minReplicas;
-        private Integer maxReplicas;
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 } 
